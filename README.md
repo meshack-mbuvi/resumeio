@@ -1,0 +1,2 @@
+[![Build Status](https://travis-ci.com/meshack-mbuvi/resumeio.svg?branch=develop)](https://travis-ci.com/meshack-mbuvi/resumeio)
+[![Coverage Status](https://coveralls.io/repos/github/meshack-mbuvi/resumeio/badge.svg?branch=develop)](https://coveralls.io/github/meshack-mbuvi/resumeio?branch=develop)
