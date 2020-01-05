@@ -1,1 +1,4 @@
-resumeio/__pycache*
+resumeio/apps/**/__pycache__/*
+resumeio/__pycache__/*
+
+.env
