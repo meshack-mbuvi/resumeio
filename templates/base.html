@@ -1,38 +1,75 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>{% block title %}Smart Resume{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/app.css' %}">
-    {% block stylesheet %}{% endblock %} 
-    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+    <meta charset="utf-8" />
+    <title>{% block title %}Smart Resumes{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/styles.css' %}"
+    />
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}" sizes="32x32">
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {% block stylesheet %}{% endblock %}
+    <link
+      href="https://fonts.googleapis.com/css?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    {% block body %}  <!-- HERE -->
-      <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <div class="container">
-          <a class="navbar-brand" href="{% url 'home' %}">Smart Resume</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="mainMenu">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">{{ user.username }}</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-      </nav>
+    {% block body %}
+    <nav class="navbar navbar-expand-sm navbar-light">
       <div class="container">
-        {% block content %}
-        {% endblock %}
+        <a class="navbar-brand" href="">
+          <img src="{% static 'img/logo.png' %}" alt="" class="logo">
+          Smart Resume</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#mainMenu"
+          aria-controls="mainMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainMenu">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Templates</a>
+            </li>
+          </ul>
+          <div class="navbar-separator"></div>
+
+          <ul class="navbar-nav">
+            {% if user.username %}
+            <li class="nav-item">
+              <a class="nav-link" href="#">{{ user.username }}</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link login" href="{% url 'login' %}" id="login">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link button" href="{% url 'signup' %}">Sign Up</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
-    {% endblock body %} 
+    </nav>
+    <div class="container">
+      {% block content %} {% endblock %}
+    </div>
+    {% endblock body %}
   </body>
 </html>
