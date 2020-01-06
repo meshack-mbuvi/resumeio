@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse, resolve
 from ..views import SignUpView
 from ..forms import SignUpForm
-from ..models import User
+from django.contrib.auth.models import User
 
 
 class SetUpTests(TestCase):
@@ -40,5 +40,19 @@ class SuccessfulSignUpTests(TestCase):
         self.response = self.client.post(url, data)
 
     def test_user_creation_successful(self):
-
         self.assertTrue(User.objects.exists())
+
+
+class UnsuccessfulSignUpTests(TestCase):
+    def setUp(self):
+        url = reverse('signup')
+        data = {
+            'email': 'test@gmail.com',
+            'password1': 'xasr@1234',
+            'password2': 'xasr@1234'
+        }
+
+        self.response = self.client.post(url, data)
+
+    def test_user_creation_unsuccessful(self):
+        self.assertFalse(User.objects.exists())
