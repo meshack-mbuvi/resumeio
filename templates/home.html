@@ -1,31 +1,44 @@
-{% extends 'base.html' %}
-{% block breadcrumb %}
-  <li class="breadcrumb-item active"><a href="{% url 'home' %}">Boards</a> </li>
-{% endblock %}
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div class="home-title">
+    <div class="row">
+      <div class="col-md-12 ml- mt-4">
+        Only about 1% of resumes make it past the first round of a job
+        application. Be in the top 1%.
+      </div>
+    </div>
+  </div>
 
-{% block content %}
+  <div class="sub-title">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8 mt-4">
+        Use professional field-tested resume templates that follow the exact
+        ‘resume rules’ employers look for. Easy to use & done within minutes -
+        try now for free!
+      </div>
+    </div>
+  </div>
 
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th>Board</th>
-      <th>Posts</th>
-      <th>Topics</th>
-      <th>Last Post</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for board in boards %}
-      <tr>
-        <td>
-          <a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a>
-          <small class="text-muted d-block">{{ board.description }}</small>
-        </td>
-        <td class="align-middle">0</td>
-        <td class="align-middle">0</td>
-        <td></td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+  <div class="sub-title">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="co-md-4">
+        <div class="nav-item">
+          <a class="nav-link button" href="{% url 'smart_resume:create-resume' %}">Create My Resume</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="animated-label counter-wrapper">
+      <div class="counter-number ml-3 mr-2">100</div>resumes created today
+    </div>
+  </div>
+
+  
+</div>
+
 {% endblock %}
