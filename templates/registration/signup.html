@@ -1,15 +1,8 @@
+{% include '../base.html' %}
 {% load static %}
 {% load widget_tweaks %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
-
-<link
-  href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
-  rel="stylesheet"
-  id="bootstrap-css"
-/>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% block content %}
 <div class="container register">
   <div class="row">
     <div class="col-md-3 register-left">
@@ -44,3 +37,5 @@
     </div>
   </div>
 </div>
+
+{% endblock %}

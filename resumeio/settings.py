@@ -25,7 +25,7 @@ SECRET_KEY = 'd678#czmn^os^37n!wd##4_+o3vzumoq9$5=334#v5n02h8!(#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'resumeio.apps.accounts'
+    'resumeio.apps.accounts',
+    'resumeio.apps.smartresume'
     
 ]
 
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'resumeio.urls'
@@ -122,16 +124,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_URL = '/static/'
+
+# whitenoise serving static files.
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+# Add STATICFILES_DIRS where Django will search for additional static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-"""
-Tell Django about the custom `User` model we created. The string
-`authentication.User` tells Django we are referring to the `User` model in
-the `authentication` module. This module is registered above in a setting
-called `INSTALLED_APPS`.
-"""
-AUTH_USER_MODEL = 'accounts.User'
+LOGIN_REDIRECT_URL = 'smart_resume:dashboard'
+LOGOUT_REDIRECT_URL = 'home'
