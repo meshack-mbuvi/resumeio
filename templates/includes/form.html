@@ -2,7 +2,6 @@
 
 {% for field in form %}
   <div class="form-group">
-    {{form.errors}}
     {{ field.label_tag }}
 
     {% if form.is_bound %}
@@ -13,6 +12,14 @@
             {{ error }}
           </div>
         {% endfor %}
+      {% elif form.errors%}
+        {% render_field field class="form-control is-invalid" %}
+        {% for error in form.non_field_errors %}
+          <div class="invalid-feedback">
+            {{error}}
+          </div>
+        {% endfor %}
+        
       {% else %}
         {% render_field field class="form-control is-valid" %}
       {% endif %}

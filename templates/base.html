@@ -4,17 +4,30 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>{% block title %}Smart Resume{% endblock %}</title>
+    <title>{% block title %}Smart Resumes{% endblock %}</title>
     <link
       rel="stylesheet"
       type="text/css"
       href="{% static 'css/styles.css' %}"
     />
     <link
+      rel="icon"
+      type="image/png"
+      href="{% static 'img/logo.png' %}"
+      sizes="32x32"
+    />
+    
+    <link
       href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
       rel="stylesheet"
       id="bootstrap-css"
     />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     {% block stylesheet %}{% endblock %}
@@ -22,12 +35,25 @@
       href="https://fonts.googleapis.com/css?family=Lobster&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     {% block body %}
     <nav class="navbar navbar-expand-sm navbar-light">
       <div class="container">
-        <a class="navbar-brand" href="">Smart Resume</a>
+        <a class="navbar-brand" href="{% url 'smart_resume:dashboard' %}">
+          <img src="{% static 'img/logo.png' %}" alt="" class="logo" />
+          Smart Resume</a
+        >
         <button
           class="navbar-toggler"
           type="button"
@@ -40,27 +66,132 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mainMenu">
+          <!-- user authenticated -->
+          
+          {% if user.username %}
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">Templates</a>
+              <a href="{% url 'smart_resume:resumes' %}" class="nav-link">
+                Dashboard
+              </a>
             </li>
           </ul>
-          <div class="navbar-separator"></div>
-
+          <div class="navbar-separator ml-3"></div>
+          <!-- User profile links down here -->
           <ul class="navbar-nav">
-            {% if user.username %}
-            <li class="nav-item">
-              <a class="nav-link" href="#">{{ user.username }}</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" 
+              data-toggle="dropdown"
+              href="#"
+              role="button"
+              aria-haspopup="true" 
+              aria-expanded="false"
+              >{{ user.username | capfirst}}</a>
+              <div class="dropdown-menu">
+                <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
+              </div>
             </li>
-            {% else %}
+            
+          </ul>
+
+          {% else %}
+          <!-- user not authenticated -->
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown position-static">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Templates
+              </a>
+              <div class="dropdown-menu w-100" aria-labelledby="navbarDropdown">
+                <div class="row">
+                  <!-- Left panel begins -->
+                  <div class="col-md-6">
+                    <div class="container m-4">
+                      <div>
+                        <p>Select template category below 
+                          <a href="{% url 'smart_resume:resumes' %}" class="pull-right nav-link blue mr-4">View all</a></p>
+                      
+                    </div>
+                      
+                      <div class="row">
+                        <div class="col-md-6 nav-item">
+                          <a href="" class="nav-link">Professional<i class="fa fa-caret-right ml-2" aria-hidden="true"></i></a>
+                          <div class="ml-2">
+                            Job-winning templates to showcase professionalism, dependability and expertise.
+                          </div>
+                        </div>
+    
+                        <div class="col-md-6 nav-item">
+                          <a href="" class="nav-link">Simple<i class="fa fa-caret-right ml-2" aria-hidden="true"></i></a>
+                          <div class="ml-2">
+                            Clean, timeless templates with a basic structure.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-4">
+                        <div class="col-md-6 nav-item">
+                          <a href="" class="nav-link">Modern<i class="fa fa-caret-right ml-2" aria-hidden="true"></i></a></a>
+                          <div class="ml-2">
+                            Streamlined layouts with tech and design inspiration
+                          </div>
+                        </div>
+    
+                        <div class="col-md-6 nav-item">
+                          <a href="{% url 'smart_resume:resumes' %}" class="nav-link">Creative<i class="fa fa-caret-right ml-2" aria-hidden="true"></i></a>
+                          <div class="ml-2">Templates to show your creative flair and stand out
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End of left panel -->
+
+                  <!-- Right panel -->
+                  <div class="col-md-6 bg-light">
+                    <div class="row  h-100">
+                      <div class="col-md-6 col-sm-6 ml-4">
+                        <img class="template_sample ml-4 mr-0" src="/static/resume_templates/sample_template.jpg" alt="sample template">
+                      </div>
+
+                      <div class="col-md-5 ml-0  my-auto w-25">
+                        <h4>Resume templates</h4>
+                        <p>
+                          Let us help you in selecting templates from the available pool</p>
+                          <p><a href="{% url 'smart_resume:resumes' %}" class="nav-link blue mr-4">View all<i class="fa fa-caret-right ml-2" aria-hidden="true"></i></a></p>
+                        
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <!-- End of right panel -->
+                </div>
+              </div>
+            </li>
+
+            </ul>
+
+            <div class="navbar-separator"></div>
+            
+            <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link login" href="{% url 'login' %}" id="login">Log In</a>
+              <a class="nav-link login" href="{% url 'login' %}" id="login"
+                >Log In</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link button" href="{% url 'signup' %}">Sign Up</a>
             </li>
-            {% endif %}
           </ul>
+          {% endif %}
+          
+          
         </div>
       </div>
     </nav>

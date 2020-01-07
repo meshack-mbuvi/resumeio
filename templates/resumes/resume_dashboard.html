@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-item">
+                <h1 class="mt-4 blue">Dashboard</h1>
+                <p class="mb-4">Resumes <a href="{% url 'smart_resume:new-resume' %}" class="nav-link pull-right button"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create new</a></p>
+            </div><hr>
+        </div>
+    </div>
+    
+    
+</div>
+
+{% endblock %}

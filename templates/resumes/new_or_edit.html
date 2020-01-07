@@ -1,0 +1,113 @@
+{% extends 'base.html' %} {% load static %} {% block stylesheet %}
+<script>
+  // wait for the DOM to be loaded
+  $(document).ready(function() {
+    $("#bio").on("submit", e => {
+      e.preventDefault();
+      const job_title = $("#job").val();
+      const first_name = $("#fname").val();
+      const last_name = $("#lname").val();
+      const phone = $("#phone").val();
+      const csrfmiddlewaretoken = Cookies.get("csrftoken");
+
+      const dataString = `first_name=${first_name}&job_title=${job_title}&last_name=${last_name}&csrfmiddlewaretoken=${csrfmiddlewaretoken}&phone=${phone}`;
+     
+
+      $.ajax({
+        type: "POST",
+        url: "/resumes/personal_details",
+        data: dataString,
+        cache: false
+      });
+    });
+  });
+</script>
+{% endblock %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 bg-light">
+      <div class="row h-100">
+        <h3 class="blue col-md-12 mt-4">Personal details</h3>
+        <div class="col-md-12 m-auto">
+          <form
+            action="{% url 'smart_resume:personal_details' %}"
+            method="POST"
+            id="bio"
+          >
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <label for="job">Job title</label>
+                <input
+                  type="text"
+                  class="form-control bg-light"
+                  id="job"
+                  placeholder=""
+                  name="job"
+                />
+              </div>
+
+              <div class="col-md-6 col-sm-6">
+                <!-- <input type="file" id="imgInp" /> -->
+                <img id="blah" src="#" alt="your image" />
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-md-6 col-sm-6">
+                <label for="">First Name</label>
+                <input
+                  type="text"
+                  class="form-control bg-light"
+                  placeholder=""
+                  id="fname"
+                  name="fname"
+                />
+              </div>
+
+              <div class="col-md-6 col-sm-6">
+                <label for="">Last Name</label>
+                <input
+                  type="text"
+                  class="form-control bg-light"
+                  placeholder=""
+                  id="lname"
+                  name="lname"
+                />
+              </div>
+            </div>
+
+            <div class="row mt-2">
+
+              <div class="col-md-6 col-sm-6">
+                <label for="">Phone</label>
+                <input
+                  type="text"
+                  class="form-control bg-light"
+                  placeholder=""
+                  id="phone"
+                  name="phone"
+                />
+              </div>
+            </div>
+
+            <div class="row mt-2">
+              <div class="col-md-6 col-sm-6">
+                <input type="submit" class="btn" value="Save" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row">
+        <h4 class="blue col-md-12 mt-4">Professional summary</h4>
+        <div class="col-md-12 m-auto"></div>
+      </div>
+
+      <div class="col-md-6"></div>
+    </div>
+  </div>
+
+  {% endblock %}
+</div>

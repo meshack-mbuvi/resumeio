@@ -1,0 +1,39 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="blue mt-4">Job-winning resume templates</h1>
+            <p>Each templat is expertly designed and follows resume roles which hiring managers look for. These templates are field-tested and proven to make candidates stand out and get hired faster.</p>
+        </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {% for category in categories %}
+            <a href="" class="nav-link nav-item">{{category.name}}</a>
+        
+            {% endfor %}
+    </div>
+        
+    </div>
+
+    <div class="row">
+        {% for template in templates %}
+        <div class="col-md-4 template_container">
+            <img src="{{ template.image.url }}" class="template" alt="template image">
+            <div class="select">
+                <a class="button nav-link" href="{% url 'smart_resume:create-resume' template.name %}" >Use this template</a>
+              </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+    
+    
+</div>
+
+{% endblock %}
