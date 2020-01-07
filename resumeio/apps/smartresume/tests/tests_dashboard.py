@@ -22,7 +22,7 @@ class DashboardTests(TestCase):
         self.response = self.client.get(dashboard_url)
 
     def test_can_get_home(self):
-        home_url = reverse('smart_resume:home')
+        home_url = reverse('smart_resume:dashboard')
         response = self.client.get(home_url)
         self.assertEqual(self.response.status_code, 200)
 
@@ -36,7 +36,7 @@ class DashboardTests(TestCase):
         self.assertContains(self.response, '<div class="sub-title">')
 
     def test_can_see_link_to_create_resume(self):
-        create_resume_link = reverse('smart_resume:create-resume')
+        create_resume_link = reverse('smart_resume:resumes')
         self.assertContains(
             self.response, 'href="{0}"'
             .format(create_resume_link))

@@ -11,7 +11,11 @@
       <p>You are a few steps away from landing your dream job!</p>
     </div>
     <div class="col-md-9 register-right">
+      {% if next %}
+      <form action="{% url 'login'%}?next={{next}} " method="POST" novalidate>
+      {% else %}
       <form action="{% url 'login' %}" method="POST" novalidate>
+        {% endif %}
         {% csrf_token %}
         <div class="tab-content" id="myTabContent">
           <div
